@@ -13,9 +13,9 @@ if (!$GATEWAY["type"]) die("Módulo não ativado");
 $q2 		= explode("&",base64_decode($q));
 $invoiceid 	= $q2[0];
 $token		= $q2[1];
-$op			= $q2[2];
+$op		= $q2[2];
 $tstat		= $q2[3];
-$q 			= base64_encode($invoiceid . "&" . md5($invoiceid . "a294dsd03dtd") . "&captura");
+$q 		= base64_encode($invoiceid . "&" . md5($invoiceid . "a294dsd03dtd") . "&captura");
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +61,7 @@ $q 			= base64_encode($invoiceid . "&" . md5($invoiceid . "a294dsd03dtd") . "&ca
 
             <div class="row">
 
-				<?php require_once("sistema.php"); ?>
+		<?php require_once("sistema.php"); ?>
 
             </div>
     </div>
