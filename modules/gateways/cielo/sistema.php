@@ -3,37 +3,37 @@ if (is_numeric($invoiceid) && $invoiceid > 0 && $token == md5($invoiceid . "a294
 
 	$result = full_query("SELECT * FROM `tblinvoices` WHERE id = " . $invoiceid);
 	$data = mysql_fetch_array($result);
-	$invoice["id"] 			= $data["id"];
-	$invoice["userid"] 		= $data["userid"];
-	$invoice["date"] 		= $data["date"];
+	$invoice["id"] 		= $data["id"];
+	$invoice["userid"] 	= $data["userid"];
+	$invoice["date"] 	= $data["date"];
 	$invoice["duedate"] 	= $data["duedate"];
 	$invoice["subtotal"] 	= $data["subtotal"];
-	$invoice["credit"] 		= $data["credit"];
-	$invoice["tax"] 		= $data["tax"];
+	$invoice["credit"] 	= $data["credit"];
+	$invoice["tax"] 	= $data["tax"];
 	$invoice["taxrate"] 	= $data["taxrate"];
-	$invoice["total"] 		= $data["total"];
-	$invoice["status"] 		= $data["status"];
-	$invoice["tid"] 		= $data["notes"];
-	$url_cielo				= ($GATEWAY["testmode"] == "on") ? "https://qasecommerce.cielo.com.br/servicos/ecommwsec.do" : "https://ecommerce.cielo.com.br/servicos/ecommwsec.do";
-	$url_retorno		 	= ($_SERVER["HTTPS"] == "on") ? "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"] . "?q=" . $q : "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"] . "?q=" . $q;
-	$base_redir				= str_replace("modules/gateways/cielo/invoice.php","",$_SERVER["PHP_SELF"]);	
+	$invoice["total"] 	= $data["total"];
+	$invoice["status"] 	= $data["status"];
+	$invoice["tid"] 	= $data["notes"];
+	$url_cielo		= ($GATEWAY["testmode"] == "on") ? "https://qasecommerce.cielo.com.br/servicos/ecommwsec.do" : "https://ecommerce.cielo.com.br/servicos/ecommwsec.do";
+	$url_retorno		= ($_SERVER["HTTPS"] == "on") ? "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"] . "?q=" . $q : "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"] . "?q=" . $q;
+	$base_redir		= str_replace("modules/gateways/cielo/invoice.php","",$_SERVER["PHP_SELF"]);	
 
 	if ($invoice["status"] == "Unpaid") {
 					
 		if ($op == "erro") {
 						
 			$codigosretorno = array(
-									"0"=>"Transação Criada",
-									"1"=>"Transação em Andamento",
-									"2"=>"Transação Autenticada",
-									"3"=>"Transação não Autenticada",
-									"4"=>"Transação Autorizada",
-									"5"=>"Transação não Autorizada",
-									"6"=>"Transação Capturada",
-									"9"=>"Transação Cancelada",
-									"10"=>"Transação em Autenticação",
-									"12"=>"Transação em Cancelamento"
-									);
+						"0"=>"Transação Criada",
+						"1"=>"Transação em Andamento",
+						"2"=>"Transação Autenticada",
+						"3"=>"Transação não Autenticada",
+						"4"=>"Transação Autorizada",
+						"5"=>"Transação não Autorizada",
+						"6"=>"Transação Capturada",
+						"9"=>"Transação Cancelada",
+						"10"=>"Transação em Autenticação",
+						"12"=>"Transação em Cancelamento"
+					);
 		
 			echo "<center><strong>" . $codigosretorno[$tstat] . "</strong></center>";
 		
@@ -66,14 +66,14 @@ if (is_numeric($invoiceid) && $invoiceid > 0 && $token == md5($invoiceid . "a294
 				curl_close($curl);
 	
 				$XML = simplexml_load_string($result);
-				$dados_pedido = "dados-pedido";
+				$dados_pedido 	  = "dados-pedido";
 				$pedido		  = (string) $XML->$dados_pedido->numero;
 				$tid 	   	  = (string) $XML->tid;
 				$status		  = (string) $XML->autorizacao->codigo;
 		
 				if (($status == 4 || $status == 6) && $pedido == $invoiceid) {		
 					full_query("update tblinvoices set notes = '' where id = " . $invoice["id"]);		
-				    addInvoicePayment($invoice["id"],$invoice["tid"],$invoice["total"],0,"cielo");
+				    	addInvoicePayment($invoice["id"],$invoice["tid"],$invoice["total"],0,"cielo");
 					logTransaction("cielo",$result,"Successful");
 					echo "<script>window.location='" . $base_redir . "viewinvoice.php?id=" . $invoice["id"] . "'</script>";
 				} else {
