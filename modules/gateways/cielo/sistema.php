@@ -1,4 +1,19 @@
 <?php
+/**
+ * Cielo
+ *
+ * Sistema para processamento de pagamentos cielo - BuyPage Cielo.
+ *
+ * Release inicial, com certeza pode ser melhorado
+ *
+ * @package    cielo
+ * @author     Weverton Velludo <wv@brasilnetwork.com.br>
+ * @copyright  Copyright (c) Weverton Velludo 2015
+ * @license    http://www.brasilnetwork.com.br
+ * @version    $Id$
+ * @link       http://www.brasilnetwork.com.br
+ */
+
 if (is_numeric($invoiceid) && $invoiceid > 0 && $token == md5($invoiceid . "a294dsd03dtd")) {
 
 	$result = full_query("SELECT * FROM `tblinvoices` WHERE id = " . $invoiceid);
