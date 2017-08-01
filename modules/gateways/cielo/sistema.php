@@ -161,7 +161,7 @@ if (is_numeric($invoiceid) && $invoiceid > 0 && $token == md5($invoiceid . "a294
 				echo "<center><br><strong>Clique abaixo na bandeira de seu cartão para ser redirecionado para a Cielo:</strong><br><br><br>";
 				
 				if ($GATEWAY["visa"] == "on") echo "<a href=\"invoice.php?q=" . $_GET["q"] . "&tipo=visa\"><img src=\"visa.png\"></a>";
-				if ($GATEWAY["master"] == "on") echo "<a href=\"invoice.php?q=" . $_GET["q"] . "&tipo=master\"><img src=\"mastercard.png\"></a>";
+				if ($GATEWAY["master"] == "on") echo "<a href=\"invoice.php?q=" . $_GET["q"] . "&tipo=mastercard\"><img src=\"mastercard.png\"></a>";
 				if ($GATEWAY["amex"] == "on") echo "<a href=\"invoice.php?q=" . $_GET["q"] . "&tipo=amex\"><img src=\"americanexpress.png\"></a>";
 				if ($GATEWAY["elo"] == "on") echo "<a href=\"invoice.php?q=" . $_GET["q"] . "&tipo=elo\"><img src=\"elo.png\"></a>";
 				if ($GATEWAY["diners"] == "on") echo "<a href=\"invoice.php?q=" . $_GET["q"] . "&tipo=diners\"><img src=\"diners.png\"></a>";
